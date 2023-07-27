@@ -1,4 +1,5 @@
 import './index.css';
+import 'leaflet/dist/leaflet.css';
 
 import { MainLayout } from 'components/Layout';
 import ReactDOM from 'react-dom/client';

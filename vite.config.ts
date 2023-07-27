@@ -15,6 +15,7 @@ export default defineConfig({
       models: '/src/models',
       helpers: '/src/helpers',
       data: '/src/data',
+      assets: '/src/assets',
     },
   },
 });

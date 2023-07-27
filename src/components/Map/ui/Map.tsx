@@ -1,5 +1,3 @@
-import 'leaflet/dist/leaflet.css';
-
 import { LatLngBoundsExpression, LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
 
