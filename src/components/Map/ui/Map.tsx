@@ -1,30 +1,13 @@
 import 'leaflet/dist/leaflet.css';
 
-import { calculateZoom } from 'helpers';
-import { getCenterFromAllCoordinates } from 'helpers/getCenterFromAllCoordinates';
+import { useInitializeMap } from 'components/Map/hooks/useInitializeMap';
 import { LatLngExpression } from 'leaflet';
-import { useEffect, useRef } from 'react';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
-import { selectCoordinates } from 'store/selectors';
-import { useAppSelector } from 'store/store';
 
 export const DEFAULT_COORDINATED = { lat: 59.93863, lng: 30.31413 };
 
 export const Map = () => {
-  const coordinates = useAppSelector(selectCoordinates);
-
-  const mapRef = useRef<L.Map>(null);
-
-  const center = getCenterFromAllCoordinates(coordinates);
-  const zoom = calculateZoom(coordinates);
-
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.flyTo(center, zoom, {
-        duration: 1,
-      });
-    }
-  }, [center]);
+  const { mapRef, zoom, center, coordinates } = useInitializeMap();
 
   return (
     <MapContainer id={'map'} center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef}>
@@ -33,15 +16,17 @@ export const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <Marker position={DEFAULT_COORDINATED} />
+      {!coordinates.length && <Marker position={DEFAULT_COORDINATED} />}
 
-      <Marker position={center}>
-        <Tooltip permanent>
-          Center:
-          <p>Lat: {center.lat}</p>
-          <p>Lng: {center.lng}</p>
-        </Tooltip>
-      </Marker>
+      {coordinates.map((point, index) => (
+        <Marker position={point as LatLngExpression} key={index}>
+          <Tooltip>
+            Point:
+            <p>Lat: {+point[0]}</p>
+            <p>Lng: {+point[1]}</p>
+          </Tooltip>
+        </Marker>
+      ))}
 
       <Polyline positions={coordinates as LatLngExpression[]} />
     </MapContainer>
