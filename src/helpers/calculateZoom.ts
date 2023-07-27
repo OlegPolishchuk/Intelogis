@@ -10,6 +10,8 @@ export const calculateZoom = (coordinates: Coordinates[]) => {
   const mapContainer = document.getElementById('map');
   const mapWidth = mapContainer?.clientWidth || DEFAULT_MAP_WITH;
 
+  console.log(mapWidth);
+
   const latitudes = coordinates.map((coord) => +coord[0]);
   const longitudes = coordinates.map((coord) => +coord[1]);
 
@@ -21,8 +23,6 @@ export const calculateZoom = (coordinates: Coordinates[]) => {
   // Вычисляем разницу между минимальной и максимальной широтой и долготой
   const latDiff = maxLat - minLat;
   const lngDiff = maxLng - minLng;
-
-  // Определяем размер экрана (в данном случае, 800px)
 
   // Вычисляем zoom на основе размера экрана и разницы между минимальной и максимальной широтой или долготой
   const zoomLat = Math.floor(Math.log2((360 * (mapWidth / 256)) / latDiff));
