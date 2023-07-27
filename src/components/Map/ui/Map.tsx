@@ -1,10 +1,10 @@
+import markerIcon from 'assets/mapIcons/marker-icon.png';
+import markerIcon2x from 'assets/mapIcons/marker-icon-2x.png';
+import markerShadowIcon from 'assets/mapIcons/marker-shadow.png';
 import { LatLngBoundsExpression, LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
 
-import markerIcon from '../../../assets/mapIcons/marker-icon.png';
-import markerIcon2x from '../../../assets/mapIcons/marker-icon-2x.png';
-import markerShadowIcon from '../../../assets/mapIcons/marker-shadow.png';
 import { useInitializeMap } from '../hooks/useInitializeMap';
 
 const defaultIconOptions = L.Icon.Default.prototype.options;
