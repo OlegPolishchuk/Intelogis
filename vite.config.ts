@@ -12,6 +12,9 @@ export default defineConfig({
       selectors: '/src/store/selectors',
       reducers: '/src/store/reducers',
       sagas: '/src/store/sagas',
+      models: '/src/models',
+      helpers: '/src/helpers',
+      data: '/src/data',
     },
   },
 });

@@ -3,15 +3,13 @@ import { Content } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
 import { Map } from 'components/Map';
 
-import cls from './Layout.module.css';
-
 export const MainLayout = () => {
   return (
-    <Layout className={cls.layout}>
+    <Layout>
       <Sider collapsible theme={'light'}>
         left sidebar
       </Sider>
-      <Content className={cls.content}>
+      <Content>
         <Map />
       </Content>
     </Layout>

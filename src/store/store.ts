@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from 'store/sagas/rootSata';
+import { mapReducer } from 'store/reducers';
+import { rootSaga } from 'store/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({ mapReducer });
 
 export const store = configureStore({
   reducer: rootReducer,
