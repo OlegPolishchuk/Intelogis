@@ -2,19 +2,18 @@ import 'leaflet/dist/leaflet.css';
 
 import { calculateZoom } from 'helpers';
 import { getCenterFromAllCoordinates } from 'helpers/getCenterFromAllCoordinates';
+import { LatLngExpression } from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
-import { selectGeometry } from 'store/selectors';
+import { selectCoordinates } from 'store/selectors';
 import { useAppSelector } from 'store/store';
 
 export const DEFAULT_COORDINATED = { lat: 59.93863, lng: 30.31413 };
 
 export const Map = () => {
-  const geometry = useAppSelector(selectGeometry);
+  const coordinates = useAppSelector(selectCoordinates);
 
   const mapRef = useRef<L.Map>(null);
-
-  const { coordinates } = geometry;
 
   const center = getCenterFromAllCoordinates(coordinates);
   const zoom = calculateZoom(coordinates);
@@ -44,7 +43,7 @@ export const Map = () => {
         </Tooltip>
       </Marker>
 
-      <Polyline positions={coordinates} />
+      <Polyline positions={coordinates as LatLngExpression[]} />
     </MapContainer>
   );
 };

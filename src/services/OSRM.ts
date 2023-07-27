@@ -5,7 +5,7 @@ const PROFILE = 'driving';
 
 export const fetchRoutes = async (getPoints: string) => {
   const res = await fetch(
-    `${BASE_URL}/${PROFILE}/${getPoints}?overview=simplified&geometries=geojson`,
+    `${BASE_URL}/${PROFILE}/${getPoints}?overview=simplified&geometries=polyline `,
   );
 
   const data: FetchRoutesResponse = await res.json();

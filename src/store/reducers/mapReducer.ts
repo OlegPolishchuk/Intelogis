@@ -1,6 +1,6 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { baseRoutes } from 'data/data';
-import { Geometry } from 'models/Route';
+import { Coordinates } from 'models/Route';
 
 export interface BaseRoute {
   name: string;
@@ -12,16 +12,13 @@ export type Nullable<T> = T | null;
 interface InitialState {
   baseRoutes: BaseRoute[];
   selectedRoute: Nullable<BaseRoute>;
-  geometry: Geometry;
+  coordinates: Coordinates[];
 }
 
 const initialState: InitialState = {
   baseRoutes,
   selectedRoute: null,
-  geometry: {
-    type: '',
-    coordinates: [],
-  },
+  coordinates: [],
 };
 
 const mapSlice = createSlice({
@@ -32,8 +29,8 @@ const mapSlice = createSlice({
       state.selectedRoute = action.payload.route;
     },
 
-    setCoordinates: (state, action: PayloadAction<{ geometry: Geometry }>) => {
-      state.geometry = action.payload.geometry;
+    setCoordinated: (state, action: PayloadAction<{ coordinates: Coordinates[] }>) => {
+      state.coordinates = action.payload.coordinates;
     },
   },
 });

@@ -8,7 +8,8 @@ interface Legs {
 }
 
 export interface Route {
-  geometry: Geometry;
+  // geometry: Geometry;
+  geometry: string;
   legs: Legs[];
   weight_name: string;
   weight: number;
@@ -16,12 +17,7 @@ export interface Route {
   distance: number;
 }
 
-export type Coordinates = LatLngExpression[];
-
-export interface Geometry {
-  coordinates: Coordinates[];
-  type: string;
-}
+export type Coordinates = LatLngExpression[] | [number, number];
 
 export interface Waypoints {
   hint: string;

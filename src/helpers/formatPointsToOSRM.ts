@@ -1,3 +1,8 @@
 export const formatPointsToOSRM = (coordinates: number[][]) => {
-  return coordinates.map((c) => c.join(',')).join(';');
+  return coordinates
+    .map((c) => {
+      const reversed = [...c].reverse();
+      return reversed.join(',');
+    })
+    .join(';');
 };

@@ -1,3 +1,4 @@
+import polyline from '@mapbox/polyline';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { formatPointsToOSRM } from 'helpers/formatPointsToOSRM';
 import { call, put, takeLatest } from 'redux-saga/effects';
@@ -19,8 +20,10 @@ function* workerFetchRoutes(action: PayloadAction<BaseRoute>): Generator {
     const { routes } = dataFromOSRM as FetchRoutesResponse;
     const { geometry } = routes[0];
 
-    yield put(mapActions.setCoordinates({ geometry }));
+    const decodedCoordinates = polyline.decode(geometry);
+
+    yield put(mapActions.setCoordinated({ coordinates: decodedCoordinates }));
   } catch (e) {
-    console.log('error');
+    console.log('error', e);
   }
 }
