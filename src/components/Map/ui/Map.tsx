@@ -1,13 +1,12 @@
 import 'leaflet/dist/leaflet.css';
 
-import { useInitializeMap } from 'components/Map/hooks/useInitializeMap';
 import { LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
 
-export const DEFAULT_COORDINATED = { lat: 59.93863, lng: 30.31413 };
+import { useInitializeMap } from '../hooks/useInitializeMap';
 
 export const Map = () => {
-  const { mapRef, zoom, center, coordinates } = useInitializeMap();
+  const { mapRef, zoom, center, coordinates, userCoordinates } = useInitializeMap();
 
   return (
     <MapContainer id={'map'} center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef}>
@@ -16,7 +15,7 @@ export const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {!coordinates.length && <Marker position={DEFAULT_COORDINATED} />}
+      {!coordinates.length && <Marker position={userCoordinates} />}
 
       {coordinates.map((point, index) => (
         <Marker position={point as LatLngExpression} key={index}>

@@ -22,7 +22,7 @@ function* workerFetchRoutes(action: PayloadAction<BaseRoute>): Generator {
 
     const decodedCoordinates = polyline.decode(geometry);
 
-    yield put(mapActions.setCoordinated({ coordinates: decodedCoordinates }));
+    yield put(mapActions.setCoordinates({ coordinates: decodedCoordinates }));
   } catch (e) {
     console.log('error', e);
   }

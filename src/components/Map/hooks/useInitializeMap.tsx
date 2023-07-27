@@ -1,14 +1,15 @@
 import { calculateZoom, getCenterFromAllCoordinates } from 'helpers';
 import { useEffect, useRef } from 'react';
-import { selectCoordinates } from 'store/selectors';
+import { selectCoordinates, selectUserCoordinates } from 'store/selectors';
 import { useAppSelector } from 'store/store';
 
 export const useInitializeMap = () => {
   const coordinates = useAppSelector(selectCoordinates);
+  const userCoordinates = useAppSelector(selectUserCoordinates);
 
   const mapRef = useRef<L.Map>(null);
 
-  const center = getCenterFromAllCoordinates(coordinates);
+  const center = getCenterFromAllCoordinates(coordinates, userCoordinates);
   const zoom = calculateZoom(coordinates);
 
   useEffect(() => {
@@ -24,5 +25,6 @@ export const useInitializeMap = () => {
     zoom,
     mapRef,
     coordinates,
+    userCoordinates,
   };
 };

@@ -1,9 +1,12 @@
-import { DEFAULT_COORDINATED } from 'components/Map';
+import { LatLngExpression } from 'leaflet';
 import { Coordinates } from 'models/Route';
 
-export const getCenterFromAllCoordinates = (coordinates: Coordinates[]) => {
+export const getCenterFromAllCoordinates = (
+  coordinates: Coordinates[],
+  userCoordinates: LatLngExpression,
+) => {
   if (coordinates.length === 0) {
-    return DEFAULT_COORDINATED;
+    return userCoordinates;
   }
 
   const latList = coordinates.map((coord) => +coord[0]);

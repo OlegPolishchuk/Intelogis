@@ -1,5 +1,6 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { baseRoutes } from 'data/data';
+import { LatLngExpression } from 'leaflet';
 import { Coordinates } from 'models/Route';
 
 export interface BaseRoute {
@@ -13,12 +14,16 @@ interface InitialState {
   baseRoutes: BaseRoute[];
   selectedRoute: Nullable<BaseRoute>;
   coordinates: Coordinates[];
+  userCoordinates: LatLngExpression;
 }
+
+export const DEFAULT_COORDINATES = { lat: 59.93863, lng: 30.31413 };
 
 const initialState: InitialState = {
   baseRoutes,
   selectedRoute: null,
   coordinates: [],
+  userCoordinates: DEFAULT_COORDINATES,
 };
 
 const mapSlice = createSlice({
@@ -29,8 +34,12 @@ const mapSlice = createSlice({
       state.selectedRoute = action.payload.route;
     },
 
-    setCoordinated: (state, action: PayloadAction<{ coordinates: Coordinates[] }>) => {
+    setCoordinates: (state, action: PayloadAction<{ coordinates: Coordinates[] }>) => {
       state.coordinates = action.payload.coordinates;
+    },
+
+    setUserCoordinated: (state, action: PayloadAction<{ coordinates: LatLngExpression }>) => {
+      state.userCoordinates = action.payload.coordinates;
     },
   },
 });
