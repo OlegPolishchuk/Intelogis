@@ -1,10 +1,15 @@
-import { Button, Menu as AntdMenu } from 'antd';
+import { Menu as AntdMenu } from 'antd';
 import { useMenu } from 'components/Menu/hooks/useMenu';
+import { ResetButton } from 'components/ResetButton';
 
 import cls from './Menu.module.css';
 
-export const Menu = () => {
-  const { items, handleSelectRoute, resetMap, selectedKeys } = useMenu();
+interface Props {
+  isMenuCollapsed: boolean;
+}
+
+export const Menu = ({ isMenuCollapsed }: Props) => {
+  const { items, handleSelectRoute, selectedKeys, resetMap } = useMenu();
 
   return (
     <>
@@ -17,9 +22,7 @@ export const Menu = () => {
         theme={'light'}
       />
 
-      <Button className={cls.button_reset} onClick={resetMap}>
-        Сбросить
-      </Button>
+      <ResetButton isMenuCollapsed={isMenuCollapsed} onClick={resetMap} />
     </>
   );
 };
