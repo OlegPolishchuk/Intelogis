@@ -1,7 +1,20 @@
 import { LatLngBoundsExpression, LatLngExpression } from 'leaflet';
+import L from 'leaflet';
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
 
+import markerIcon from '../../../assets/mapIcons/marker-icon.png';
+import markerIcon2x from '../../../assets/mapIcons/marker-icon-2x.png';
+import markerShadowIcon from '../../../assets/mapIcons/marker-shadow.png';
 import { useInitializeMap } from '../hooks/useInitializeMap';
+
+const defaultIconOptions = L.Icon.Default.prototype.options;
+
+const icon = L.icon({
+  ...defaultIconOptions,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadowIcon,
+  iconRetinaUrl: markerIcon2x,
+});
 
 export const Map = () => {
   const { mapRef, zoom, center, coordinates, userCoordinates } = useInitializeMap();
@@ -20,10 +33,10 @@ export const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {!coordinates.length && <Marker position={userCoordinates} />}
+      {!coordinates.length && <Marker position={userCoordinates} icon={icon} />}
 
       {coordinates.map((point, index) => (
-        <Marker position={point as LatLngExpression} key={index}>
+        <Marker position={point as LatLngExpression} key={index} icon={icon}>
           <Tooltip>
             Point:
             <p>Lat: {+point[0]}</p>
