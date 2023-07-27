@@ -7,9 +7,11 @@ export interface BaseRoute {
   waypoints: number[][];
 }
 
+export type Nullable<T> = T | null;
+
 interface InitialState {
   baseRoutes: BaseRoute[];
-  selectedRoute: BaseRoute | null;
+  selectedRoute: Nullable<BaseRoute>;
   geometry: Geometry;
 }
 
@@ -26,7 +28,7 @@ const mapSlice = createSlice({
   name: 'mapReducer',
   initialState,
   reducers: {
-    setRoute: (state, action: PayloadAction<{ route: BaseRoute }>) => {
+    setSelectedRoute: (state, action: PayloadAction<{ route: Nullable<BaseRoute> }>) => {
       state.selectedRoute = action.payload.route;
     },
 
@@ -38,4 +40,4 @@ const mapSlice = createSlice({
 
 export const { reducer: mapReducer, actions: mapActions } = mapSlice;
 
-export const fetchRoutesAction = createAction<BaseRoute>('mapReducer/FETCH_ROUTES');
+export const fetchRoutesAction = createAction<Nullable<BaseRoute>>('mapReducer/FETCH_ROUTES');

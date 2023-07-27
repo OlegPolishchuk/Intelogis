@@ -1,17 +1,50 @@
 import 'leaflet/dist/leaflet.css';
 
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { calculateZoom } from 'helpers';
+import { getCenterFromAllCoordinates } from 'helpers/getCenterFromAllCoordinates';
+import { useEffect, useRef } from 'react';
+import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet';
+import { selectGeometry } from 'store/selectors';
+import { useAppSelector } from 'store/store';
 
-const MINSK_COORDINATES = { lat: 53.9, lng: 27.56667 };
+export const DEFAULT_COORDINATED = { lat: 59.93863, lng: 30.31413 };
 
 export const Map = () => {
+  const geometry = useAppSelector(selectGeometry);
+
+  const mapRef = useRef<L.Map>(null);
+
+  const { coordinates } = geometry;
+
+  const center = getCenterFromAllCoordinates(coordinates);
+  const zoom = calculateZoom(coordinates);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.flyTo(center, zoom, {
+        duration: 1,
+      });
+    }
+  }, [center]);
+
   return (
-    <MapContainer center={MINSK_COORDINATES} zoom={13} scrollWheelZoom={false}>
+    <MapContainer id={'map'} center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={MINSK_COORDINATES} />
+
+      <Marker position={DEFAULT_COORDINATED} />
+
+      <Marker position={center}>
+        <Tooltip permanent>
+          Center:
+          <p>Lat: {center.lat}</p>
+          <p>Lng: {center.lng}</p>
+        </Tooltip>
+      </Marker>
+
+      <Polyline positions={coordinates} />
     </MapContainer>
   );
 };

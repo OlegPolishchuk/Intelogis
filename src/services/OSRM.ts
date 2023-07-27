@@ -10,5 +10,5 @@ export const fetchRoutes = async (getPoints: string) => {
 
   const data: FetchRoutesResponse = await res.json();
 
-  return data.routes;
+  return data;
 };

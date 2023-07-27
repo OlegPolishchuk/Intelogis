@@ -1,12 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { formatPointsToOSRM } from 'helpers/formatPointsToOSRM';
-import { Geometry } from 'models/Route';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchRoutes } from 'services/OSRM';
+import { FetchRoutesResponse } from 'services/types';
 import { BaseRoute, fetchRoutesAction, mapActions } from 'store/reducers';
 
 export function* watcherRoutes(): Generator {
-  yield takeEvery(fetchRoutesAction, workerFetchRoutes);
+  yield takeLatest(fetchRoutesAction, workerFetchRoutes);
 }
 
 function* workerFetchRoutes(action: PayloadAction<BaseRoute>): Generator {
@@ -16,7 +16,8 @@ function* workerFetchRoutes(action: PayloadAction<BaseRoute>): Generator {
     const coordinates = formatPointsToOSRM(selectedRoute.waypoints);
 
     const dataFromOSRM = yield call(() => fetchRoutes(coordinates));
-    const geometry = dataFromOSRM as Geometry;
+    const { routes } = dataFromOSRM as FetchRoutesResponse;
+    const { geometry } = routes[0];
 
     yield put(mapActions.setCoordinates({ geometry }));
   } catch (e) {

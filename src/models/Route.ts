@@ -1,3 +1,5 @@
+import { LatLngExpression } from 'leaflet';
+
 interface Legs {
   summary: string;
   weight: number;
@@ -14,7 +16,7 @@ export interface Route {
   distance: number;
 }
 
-export type Coordinates = number[];
+export type Coordinates = LatLngExpression[];
 
 export interface Geometry {
   coordinates: Coordinates[];
